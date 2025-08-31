@@ -10,7 +10,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# -------------------------- 全局变量定义 --------------------------
 # 吉伊的周边商品数据
 merchandise = [
     {"name": "吉伊毛绒公仔", "price": "89元", "image": "image/周边1.png", "desc": "超软萌的吉伊毛绒玩具，可抱可枕～"},
@@ -29,7 +28,6 @@ character_info = {
     "好朋友": "哈奇、波奇、米露等"
 }
 
-# -------------------------- 会话状态初始化 --------------------------
 if 'current_emotion' not in st.session_state:
     st.session_state['current_emotion'] = "happy"
 if 'messages' not in st.session_state:
@@ -52,7 +50,6 @@ emotion_images = {
     "excited": "image/吉伊兴奋.png"
 }
 
-# -------------------------- 函数定义 --------------------------
 # LLM调用函数
 def get_content_from_llm(client,
                          *,
@@ -85,7 +82,6 @@ def get_content_from_llm(client,
             messages=messages,
             stream=False
         )
-        # 根据回复内容更新表情
         update_emotion_based_on_response(response.choices[0].message.content)
         return response.choices[0].message.content
     except Exception as e:
@@ -145,19 +141,8 @@ def random_emotion():
     st.session_state['current_emotion'] = random.choice(emotions)
     st.success("吉伊的表情变啦～")
 
-# -------------------------- 界面渲染 --------------------------
 # 侧边栏配置
 with st.sidebar:
-    # 简化API配置（固定base_url，预设api_key）
-    # st.subheader("")
-    # base_url = 'https://api.deepseek.com/'  # 固定为你提供的地址
-    # # 预设api_key（保持密码框隐藏，可手动修改）
-    # api_key = st.text_input(
-    #     label='API Key',
-    #     type='password',
-    #     value='sk-4207ee7113e445c5bfe64e388e99ef67'  # 预设你提供的密钥
-    # )
-
     # 动态表情切换
     st.subheader("吉伊的心情")
     st.image(emotion_images[st.session_state['current_emotion']], width=100)
