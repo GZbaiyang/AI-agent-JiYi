@@ -90,7 +90,7 @@ def get_content_from_llm(client,
         return response.choices[0].message.content
     except Exception as e:
         st.error(f"API调用失败：{str(e)}")
-        return "吉伊暂时联系不上呢～ 请稍后再试哦～♡"
+        return "吉伊正在除草啦～ 吉伊要赚钱给嘛嘛买下广州职业技术大学～♡"
 
 # 根据回复内容更新表情
 def update_emotion_based_on_response(response):
@@ -149,14 +149,14 @@ def random_emotion():
 # 侧边栏配置
 with st.sidebar:
     # 简化API配置（固定base_url，预设api_key）
-    st.subheader("API配置")
-    base_url = 'https://api.deepseek.com/'  # 固定为你提供的地址
-    # 预设api_key（保持密码框隐藏，可手动修改）
-    api_key = st.text_input(
-        label='API Key',
-        type='password',
-        value='sk-4207ee7113e445c5bfe64e388e99ef67'  # 预设你提供的密钥
-    )
+    # st.subheader("")
+    # base_url = 'https://api.deepseek.com/'  # 固定为你提供的地址
+    # # 预设api_key（保持密码框隐藏，可手动修改）
+    # api_key = st.text_input(
+    #     label='API Key',
+    #     type='password',
+    #     value='sk-4207ee7113e445c5bfe64e388e99ef67'  # 预设你提供的密钥
+    # )
 
     # 动态表情切换
     st.subheader("吉伊的心情")
@@ -165,7 +165,7 @@ with st.sidebar:
         random_emotion()
 
     # 吉伊成长记录
-    st.header("吉伊的成长记录（相机：dajiang pocket 3")
+    st.header("吉伊的成长记录（相机：dajiang pocket 3）")
     st.subheader("吉伊飞踢")
     st.video("image/吉伊飞踢.mp4")
     st.subheader("吉伊散步")
@@ -174,7 +174,7 @@ with st.sidebar:
     st.video("image/吉伊唱歌.mp4")
 
 # 主界面
-st.write('# 吉伊卡哇聊天助手 🐾')
+st.write('# 吉伊(妈妈余涵版) 🐾')
 
 # 顶部标签页
 tab1, tab2, tab3, tab4 = st.tabs(["聊天", "吉伊介绍", "互动游戏", "周边商品"])
@@ -183,11 +183,7 @@ with tab1:
     # 显示当前表情
     st.image(emotion_images[st.session_state['current_emotion']], width=150)
     # 初始化OpenAI客户端（使用配置的base_url和api_key）
-    if api_key:
-        client = OpenAI(base_url=base_url, api_key=api_key)
-    else:
-        client = None
-        st.warning("请先填写API Key哦～")
+    client = OpenAI(base_url='https://api.deepseek.com/', api_key='sk-4207ee7113e445c5bfe64e388e99ef67')
 
     # 显示聊天记录
     for role, content in st.session_state['messages']:
@@ -198,7 +194,7 @@ with tab1:
     if user_input and client:
         st.chat_message('human').write(user_input)
         st.session_state['messages'].append(('human', user_input))
-        with st.spinner('吉伊正在思考呢～'):
+        with st.spinner('吉伊正在思考呢  (((φ(◎ロ◎;)φ))) ～'):
             resp_from_ai = get_ai_response(client)  # 传入client参数
             st.chat_message('assistant').write(resp_from_ai)
             st.session_state['messages'].append(('ai', resp_from_ai))
